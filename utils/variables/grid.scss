@@ -1,50 +1,37 @@
-// Сетка ---------------------------------------------------------------------------------------------------------------
-// Режим дебагинта: вывод текущего брейкпоинта и размера контейнера
-$grid-debugger: false;
+// Дебаггинг -----------------------------------------------------------------------------------------------------------
+$grid-debugger: true;
 
-// Количество колонок в сетке
-$grid-columns: 12;
+// Основные классы -----------------------------------------------------------------------------------------------------
+$grid-container-class: 'container';
+$grid-container-padding: 15px;
+$grid-row-class: 'row';
 
-// Классы сетки
-$grid-container-class: 'container';   // Класс контейнера
-$grid-row-class: 'row';               // Класс ряда
-$grid-col-prefix: '';                 // Префикс классов ячеек. {префикс}{брейкпоинт}-{колонок}
+$grid-col-count: 12;
+$grid-col-prefix: '';
+$grid-col-padding: 15px;
 
-// Отступ между колонками
-$grid-container-padding: 16px;        // Отступ у контейнера
-$grid-col-padding: 16px;             // Отступ у ячеек
- 
-// Брейкпоинты, от большего к меньшим
+// Брейкпоинты ---------------------------------------------------------------------------------------------------------
 $grid-breakpoints: (
-        lg: (min: 1152px, container: 1152px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
-        md: (min: 974px, container: 936px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
-        ms: (min: 762px, container: 100%, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
-        sm: (min: 440px, container: 100%, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
+        xl: (min: 1200px, container: 1140px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
+        lg: (min: 992px, container: 960px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
+        md: (min: 768px, container: 720px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
+        sm: (min: 576px, container: 540px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
         xs: (min: 0px, container: 100%, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
-)!default;
+);
 
-// Добавить класс с общими стилями -------------------------------------------------------------------------------------
+// Вынести основные стили ячеек в общий класс
 $grid-col-general-class: true;
-// Имя базового класса
 $grid-col-general-class-name: 'col';
-// Убрать из других классов ячеек общие стили
-$grid-col-general-class-make-basic: true;
 
-
-// Смещение ячейки -----------------------------------------------------------------------------------------------------
-// Добавляет margin-left к колонке, для создания отступа между колонками, по размеру колонок
+// Вспомогательные классы ----------------------------------------------------------------------------------------------
+// Смещение ячеек. Добавляет отступ слева
 $grid-offset-classes-enable: true;
-// Как формировать классы для префиксов {prefix}{брейкпоинт}{postfix}-{0-11}{end}
 $grid-offset-classes-prefix: 'offset-';
 $grid-offset-classes-postfix: '';
-$grid-offset-classes-end: '';
-// Максимальное значение смещения
-$grid-offset-max: $grid-columns - 1;
+$grid-offset-max: 11;
 
-// Изменение порядка вывода --------------------------------------------------------------------------------------------
-// Устанавливает ячейке order
-$enable-grid-order-classes: false!default;
-
-// Добавление отступа ячейке через margin ------------------------------------------------------------------------------
-$grid-col-margin-classes: true!default;
-$grid-col-margin-classes-prefix: 'margin-';
+// Изменение порядка вывода
+$enable-grid-order-classes: true;
+$grid-order-classes-prefix: 'order-';
+$grid-order-classes-postfix: '';
+$grid-order-max: 6;

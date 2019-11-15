@@ -29,3 +29,6 @@
 }
 
 
+@function grid-col-padding($bp){
+  @return map-get(map-get($grid-breakpoints, $bp), col-padding);
+}

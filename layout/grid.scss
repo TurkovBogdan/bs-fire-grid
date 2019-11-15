@@ -36,7 +36,7 @@
           @include gridMedia($type) {
             width: map-get($data, container);
             left: 50%;
-            margin-left: - map-get($data, container);
+            margin-left: - map-get($data, container) / 2;
             border-style: solid;
             border-color: #03A9F4;
             border-width: 0px map-get($data, container-padding);
@@ -86,11 +86,11 @@
 
 @each $type, $data in $grid-breakpoints {
   @if (map-has-key($data, container)) {
-    @for $i from 1 through $grid-columns {
+    @for $i from 1 through $grid-col-count {
       $currentColumnClass: #{$grid-col-prefix}#{$type}-#{$i};
 
       .#{$currentColumnClass} {
-        @if ($grid-col-general-class-make-basic == false) {
+        @if ($grid-col-general-class == false) {
           width: auto;
           box-sizing: border-box;
           position: relative;
@@ -98,9 +98,9 @@
         }
 
         @include gridMedia($type) {
-          flex-basis: percentage(($i / $grid-columns));
-          max-width: percentage(($i / $grid-columns));
-          @if ($grid-col-general-class-make-basic == false) {
+          flex-basis: percentage(($i / $grid-col-count));
+          max-width: percentage(($i / $grid-col-count));
+          @if ($grid-col-general-class == false) {
             padding-left: map-get($data, col-padding);
             padding-right: map-get($data, col-padding);
           }
@@ -108,7 +108,7 @@
       }
 
       @if ($enable-grid-order-classes) {
-        .order-#{$type}-#{$i} {
+        .#{$grid-order-classes-prefix}#{$type}#{$grid-order-classes-postfix}-#{$i} {
           @media (min-width: map-get($data, min)) {
             order: $i;
           }
@@ -116,18 +116,16 @@
       }
 
       @if ($grid-offset-classes-enable) {
-        @if ($grid-offset-max >= ($i)) {
-          .#{$grid-offset-classes-prefix}#{$type}#{$grid-offset-classes-postfix}-#{($i)}#{$grid-offset-classes-end} {
+        @if ($grid-offset-max >= ($i - 1)) {
+          .#{$grid-offset-classes-prefix}#{$type}#{$grid-offset-classes-postfix}-#{($i - 1)} {
             @include gridMedia($type) {
-              margin-left: percentage((($i) / $grid-columns));
+              margin-left: percentage((($i - 1) / $grid-col-count));
             }
           }
         }
       }
-
     }
 
-    //
     @if ($grid-col-general-class) {
       .#{$grid-col-general-class-name} {
         box-sizing: border-box;
@@ -141,36 +139,15 @@
       }
     }
 
-    @if ($grid-col-margin-classes) {
-      .#{$grid-col-margin-classes-prefix}#{$type} {
-        @include gridMedia($type) {
-          margin-left: map-get($data, col-padding);
-          margin-right: map-get($data, col-padding);
-        }
-      }
-      .no-#{$grid-col-margin-classes-prefix}#{$type} {
-        @include gridMedia($type) {
-          margin-left: 0px;
-          margin-right: 0px;
-        }
-      }
-      .return-padding-#{$type} {
-        @include gridMedia($type) {
-          padding-left: map-get($data, col-padding) !important;
-          padding-right: map-get($data, col-padding) !important;
-        }
-      }
-    }
-
     @if ($enable-grid-order-classes) {
-      .order-#{$type}-first {
+      .#{$grid-order-classes-prefix}#{$type}#{$grid-order-classes-postfix}-first {
         @media (min-width: map-get($data, min)) {
           order: -1;
         }
       }
-      .order-#{$type}-last {
+      .#{$grid-order-classes-prefix}#{$type}#{$grid-order-classes-postfix}-last {
         @media (min-width: map-get($data, min)) {
-          order: $grid-columns + 1;
+          order: $grid-col-count + 1;
         }
       }
     }

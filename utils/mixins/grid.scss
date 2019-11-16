@@ -18,7 +18,7 @@
 
 // Миксин для вывода правильных медиа в цикле
 // Полезен определением первого брейкпоинта и всех остальных
-@mixin gridMedia($type) {
+@mixin grid-media($type) {
   @if $type == map-first-key($grid-breakpoints) {
     @content;
   } @else {

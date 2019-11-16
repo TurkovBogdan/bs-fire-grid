@@ -1,16 +1,18 @@
 // Дебаггинг -----------------------------------------------------------------------------------------------------------
 $grid-debugger: true;
 
-// Основные классы -----------------------------------------------------------------------------------------------------
-$grid-container-class: 'container';
-$grid-container-padding: 15px;
-$grid-row-class: 'row';
-
+// Основное ------------------------------------------------------------------------------------------------------------
 $grid-col-count: 12;
+
+// Имена классов -------------------------------------------------------------------------------------------------------
+$grid-container-class: 'container';
+$grid-row-class: 'row';
 $grid-col-prefix: '';
-$grid-col-padding: 15px;
 
 // Брейкпоинты ---------------------------------------------------------------------------------------------------------
+$grid-container-padding: 15px;
+$grid-col-padding: 15px;
+
 $grid-breakpoints: (
         xl: (min: 1200px, container: 1140px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
         lg: (min: 992px, container: 960px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
@@ -19,8 +21,9 @@ $grid-breakpoints: (
         xs: (min: 0px, container: 100%, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
 );
 
-// Вынести основные стили ячеек в общий класс
-$grid-col-general-class: true;
+// Дополнительно -------------------------------------------------------------------------------------------------------
+// Вынести общие стили в отдельный класс
+$grid-col-general-class-enable: true;
 $grid-col-general-class-name: 'col';
 
 // Вспомогательные классы ----------------------------------------------------------------------------------------------

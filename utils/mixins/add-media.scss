@@ -38,7 +38,7 @@
     }
     @else
     {
-      @include gridMedia($bpKey){
+      @include grid-media($bpKey){
         @include bs-firegrid-print-style($paramsMap);
       }
     }

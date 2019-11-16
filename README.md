@@ -112,24 +112,46 @@ $grid-breakpoints: (
 
 ### Дополнительно
 ```scss
-$grid-col-general-class: true;        // вынести базовые стили колонок в отдельный класс
-$grid-col-general-class-name: 'col';  // имя класса для базовых стилей
+$grid-col-general-class-enable: true;   // вынести базовые стили колонок в отдельный класс
+$grid-col-general-class-name: 'col';    // имя класса для базовых стилей
 ```
+Если `true`, базовые стили колонок (отступы и т.д.) будут вынесены в отдельный класс с именем указанным в `$grid-col-general-class-name`. Это значительно сократит вес стилей, но потребует добавления `.col` к каждой колонке.
 
 
 ### Вспомогательные классы
-#### Смещение ячеек. Добавляет отступ слева
+#### Смещение колонки
+Шаблон имени 
 ```scss
 $grid-offset-classes-enable: true;
 $grid-offset-classes-prefix: 'offset-';
 $grid-offset-classes-postfix: '';
 $grid-offset-max: 11;
 ```
+Шаблон имени класса: `{префикс}{код брейкпоинта}{постфикс}-{смещение}`. Использование при значениях по умолчанию:
+```html
+    <div class="row">
+        <div class="col xl-6"> ... </div>
+        <div class="col xl-4 offset-xl-2"> ... </div>
+    </div>
+```
 
 #### Изменение порядка вывода
 ```scss
-$enable-grid-order-classes: true;
+$enable-grid-order-classes: true;             
 $grid-order-classes-prefix: 'order-';
 $grid-order-classes-postfix: '';
 $grid-order-max: 6;
+```
+
+Шаблон имени класса: `{префикс}{код брейкпоинта}{постфикс}-{порядок}`. Использование при значениях по умолчанию:
+```html
+    <div class="row">
+        <div class="col xl-8 order-xl-2"> ... </div>
+        <div class="col xl-4 order-xl-1"> ... </div>
+    </div>
+
+    <div class="row">
+        <div class="col xl-8 order-xl-last"> ... </div>
+        <div class="col xl-4 order-xl-first"> ... </div>
+    </div>
 ```

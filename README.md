@@ -1,9 +1,86 @@
-# fire-grid
+# bs-firegrid
 Минималистичная, гибко настраиваемая сетка с вспомогательными миксинами для быстрого добавления правил адаптации. 
-- Написана на SCSS, потребуется сборщик (webpack/gulp)
+- Написана на SCSS, требует сборщик (webpack/gulp)
 - Работает на flexbox, построение от десктопа к мобильным
 - Можно настроить имена классов, колличество ячеек, брейкпоинты, отступы и многое другое 
 - Опциональные вспомогательные классы для добавления отступов и изменения порядка вывода
+
+# В чём главная фича?
+Вам доступно несколько очень крутых миксинов для упрошения адаптации элементов. К примеру, вот так можно прописать 
+адаптацию параграфа: 
+
+```scss
+// bs-firegrid
+p {
+  @include add-media(font-size, (xl:18px, lg: 16px, sm: 14px));
+}
+```
+Да, всего одной строчкой. Набор ключей в скобках — обычный ассоциативный массив, в sass он называется [maps](https://sass-lang.com/documentation/values/maps). 
+Такая конструкция кажется перегруженной, но она очень краткая. Сравните её с классическим миксином из `bootstrap`:
+```scss
+// bootstrap
+p {
+  font-size: 18px;
+  @include media-breakpoint-down(lg) {
+    font-size: 16px;
+  }
+  @include media-breakpoint-down(sm) {
+    font-size: 14px;
+  }
+}
+```
+
+Нужно адаптировать несколько свойств? Нет проблем:
+```scss
+p {
+  @include add-media((
+      font-size: (xl:18px, lg: 16px, sm: 14px),
+      line-height: (xl:28px, lg: 24px, sm: 22px)
+  ))
+}
+```
+
+Хотите вынести параметры типографики в переменные? Сказка:
+```scss
+$p-font-weight: 400; 
+$p-font-size: (xl:18px, lg: 16px, sm: 14px);
+$p-line-height: (xl:28px, lg: 24px, sm: 22px);
+
+p {
+  @include add-media((
+      font-weight: $p-font-weight,      
+      font-size: $p-font-size,
+      line-height: $p-line-height, 
+  ))
+}
+```
+
+Пример выше собирается вот в такой css:
+```css
+p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px
+}
+
+@media (max-width: 1199px) {
+    p {
+        font-size: 16px;
+        line-height: 24px
+    }
+}
+
+@media (max-width: 767px) {
+    p {
+        font-size: 14px;
+        line-height: 22px
+    }
+}
+```
+
+
+ 
+
 
 # Установка
 Скопируйте файлы сетки в директорию стилей и подключите два файла:

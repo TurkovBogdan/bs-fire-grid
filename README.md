@@ -125,8 +125,9 @@ $grid-col-general-class-name: 'col';    // имя класса для базов
 
 
 ### Вспомогательные классы
-#### Смещение колонки
-Шаблон имени 
+<details>
+  <summary>Смещение колонок</summary>
+
 ```scss
 $grid-offset-classes-enable: true;
 $grid-offset-classes-prefix: 'offset-';
@@ -140,8 +141,11 @@ $grid-offset-max: 11;
         <div class="col xl-4 offset-xl-2"> ... </div>
     </div>
 ```
+</details>
 
-#### Изменение порядка вывода
+<details>
+  <summary>Изменение порядка вывода</summary>
+  
 ```scss
 $enable-grid-order-classes: true;             
 $grid-order-classes-prefix: 'order-';
@@ -161,6 +165,8 @@ $grid-order-max: 6;
         <div class="col xl-4 order-xl-first"> ... </div>
     </div>
 ```
+</details>
+
 
 ## Доступные миксины
 <details>

@@ -63,20 +63,35 @@ p {
 
 
 ## Установка
-Через npm
+Используя git
 ```
-npm i bs-fire-grid
+git clone https://github.com/TurkovBogdan/bs-fire-grid.git
 ```
 
-Скопируйте файлы сетки в директорию стилей и подключите два файла:
+или bower:
+```
+bower install bs-fire-grid --save
+```
+
+После получения файлов, подключите в шаблоне стилей два файла:
 ```scss
-@import "utils/grid-utils";   // Миксины, функции, переменные 
-@import "layout/grid";        // Вывод сетки
+// Миксины, функции, переменные. Не выводит никаких стилей, но даёт доступ к миксинам
+@import "bs-fire-grid/utils/grid-utils";
+
+// Выводит стили сетки
+@import "layout/grid";
+```
+Параметры изменяются в файле `/bs-fire-grid/utils/variables/grid.scss`. По умолчанию установлены параметры аналогичные сетке `bootstrap 4`.
+
+Если вы не хотите изменять оригинальные файл, скопируйте настройки в отдельный файл, и подключите до утилит:
+```scss
+@import "custom-grid-settings"; // пользовательские настройки сетки
+
+@import "bs-fire-grid/utils/grid-utils";
+@import "bs-fire-gridlayout/grid";
 ```
 
-## Настройка
-Параметры сетки изменяются в файле ```/utils/variables/grid.scss```. По умолчанию, установлены параметры аналогичные сетке `bootstrap 4`.
-
+## Настройки
 <details>
   <summary>Режим отладки</summary>
   

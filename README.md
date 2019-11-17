@@ -217,17 +217,53 @@ p {
 <details>
   <summary>add-media<br>Добавление стилей с указанием набора значений для каждого брейкпоинта</summary>
 
+### Синтаксис
 ```scss
-  @include add-media( ... );
+  @include add-media( $styleName, $styleMap );
 ```
 
-Если требуется адаптация только одного стиля, передайте вкачестве первого атрибута название стиля, а в качестве второго мапу с набором значений. Значение прописанное для максимального брейкпоинта в сетке становиться значением по умолчанию (т.е. прописывается для тега без медиа запросса).
+`$styleName` — имя стили или многоуровневая мапа с перечнем стилей и значений.
+
+`$styleMap` — мапа с перечнем значений стиля для разных брейкпоинтов. Используется только если в `$styleName` передали имя стиля а не мапу.
+
+Если требуется прописать адаптацию только одного стиля, используется два аргумента:
+```scss
+  @include add-media('имя свойства', (
+          'код брейкпоинта': 'значение стиля',
+          'код брейкпоинта': 'значение стиля',
+          // ...
+  ));
+```
+
+Для множества стилей передаётся один аргумент с мапой:
+```scss
+  @include add-media((
+      'имя свойства': (
+          'код брейкпоинта': 'значение стиля',
+          'код брейкпоинта': 'значение стиля',
+          // ...
+      ),
+      'имя свойства': (
+          'код брейкпоинта': 'значение стиля',
+          'код брейкпоинта': 'значение стиля',
+          // ...
+      ),
+  ));
+```
+
+### Примеры
+#### Прописываем адаптацию размера шрифта параграфа с значением по умолчанию.
+Максимальный брейкпоинт `xl`. По умолчанию, нам нужен размер шрифта `18px`, а начиная с `lg` и ниже `16px`:
+
 ```scss
 p {
   @include add-media(font-size, (xl:18px, lg: 16px));
 }
-
-// результат:
+```
+Миксин устанавливает в качестве значения по умолчанию (т.е. прописывает стиль для тега без медиа запроса) значение установленное для максимального брейкпоинта.
+ 
+Стили после сборки:
+```scss
 p {
     font-size: 18px
 }
@@ -238,7 +274,32 @@ p {
     }
 }
 ```
-Если требуется адаптация нескольких стилей, передайте только один аргумент — мапу с перечнем стилей. Набор не ограничен, он не прописаны в коде.
+
+#### Прописываем адаптацию размера шрифта параграфа без значения по умолчанию.
+Максимальный брейкпоинт `xl`, но мы не будем устанавливать значение для этого брейкпоинта. На `lg` нужен кегель `18px`, а на `sm` `16px`:
+```scss
+p {
+  @include add-media(font-size, (lg:18px, sm: 16px));
+}
+```
+
+Стили после сборки:
+```scss
+@media (max-width: 1199px) {
+    p {
+        font-size: 18px
+    }
+}
+
+@media (max-width: 767px) {
+    p {
+        font-size: 16px
+    }
+}
+```
+
+#### Прописываем правила адаптации размера кегеля и интерлиньяжа для параграфа
+Если требуется адаптировать несколько свойств, в миксин передаёться только один аргумент — мапа с перечнем стилей. 
 ```scss
 p {
   @include add-media((
@@ -246,8 +307,10 @@ p {
       line-height: (xl:28px, sm: 22px)
   ))
 }
+```
 
-// результат:
+Стили после сборки:
+```scss
 p {
     font-size: 18px;
     line-height: 28px
@@ -261,44 +324,143 @@ p {
 }
 ```
 
-Если стиль не требует адаптации, можете передать одиночное значение:
+#### Сложный сценарий, миксин всеяден
+Вы можете прописать базовые стили прямо в теге и подключить миксин с перечнем адаптивных стилей. Или прописывать все стили только в миксине. Или комбинировать. 
+
+Ниже мы прописываем часть стилей прямо в теге, задаём цвет по умолчанию и жирность в миксине и прописываем несколько правил адаптации:
 ```scss
 p {
+  font-size: 18px;
+  line-height: 28px;
   @include add-media((
-          font-size: 16px,
-          line-height: (xl:28px, lg: 24px, sm: 22px)
+          color: (xl: black, sm: white),
+          font-size: (lg: 14px),
+          line-height: (lg: 22px),
+          font-weight: 400,
   ))
 }
+```
+Стили после сборки:
+```css
 
-// результат:
 p {
-    font-size: 16px;
-    line-height: 28px
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 400
 }
 
 @media (max-width: 1199px) {
     p {
-        line-height: 24px
+        font-size: 14px;
+        line-height: 22px
     }
 }
 
 @media (max-width: 767px) {
     p {
-        line-height: 22px
+        color: #fff
+    }
+}
+```
+</details>
+
+
+<details>
+  <summary>add-media-background<br>Подмена background от разрешения экрана</summary>
+  
+  ```scss
+  @include add-media-background( $imageMap );
+  ```
+  
+  `$imageMap` — мапа, ключи это разрешение экрана а значения сссылки на изображение. Разрешения необходимо указывать по убыванию
+  
+  ```scss
+  @include add-media-background((
+          'разрешеие': 'ссылка на изображение',
+          // или, если нужна поддержка ретины
+          'разрешеие': (x1: 'ссылка на изображение x1', x2:'ссылка на изображение x2'),
+  ));
+  ```
+
+Этот миксин идеально подходит для первого экрана с полноэкранным фоном. Мы можем подготовить изображения разных размеров и загружать только подходящие под экран пользователя:
+
+```scss
+.first-screen-bg{
+  @include add-media-background((
+          2560: "../../img/2560@1x.jpg",
+          1920: "../../img/1920@1x.jpg",
+          1300: "../../img/1300@1x.jpg",
+          762: (x1: "../../img/762@1x.jpg", x2:"../../img/762@2x.jpg"),
+          545: (x1: "../../img/545@1x.jpg", x2:"../../img/545@2x.jpg"),
+          440: (x1: "../../img/440@1x.jpg", x2:"../../img/440@2x.jpg"),
+  ));
+}
+```
+
+Собирается в:
+```scss
+
+.first-screen-bg {
+    width: 100%;
+    height: 100vh;
+    background-position: top;
+    background-size: 440px auto;
+    background-image: url(../img/440@1x.jpg)
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi) {
+    .first-screen-bg {
+        background-image: url(../img/440@2x.jpg)
+    }
+}
+
+@media screen and (min-width: 441px) {
+    .first-screen-bg {
+        background-size: 545px auto;
+        background-image: url(../img/545@1x.jpg)
+    }
+}
+
+@media (min-width: 441px) and (-webkit-min-device-pixel-ratio: 2),(min-width: 441px) and (min-resolution: 192dpi) {
+    .first-screen-bg {
+        background-image: url(../img/545@2x.jpg)
+    }
+}
+
+@media screen and (min-width: 546px) {
+    .first-screen-bg {
+        background-size: 762px auto;
+        background-image: url(../img/762@1x.jpg)
+    }
+}
+
+@media (min-width: 546px) and (-webkit-min-device-pixel-ratio: 2),(min-width: 546px) and (min-resolution: 192dpi) {
+    .first-screen-bg {
+        background-image: url(../img/762@2x.jpg)
+    }
+}
+
+@media screen and (min-width: 763px) {
+    .first-screen-bg {
+        background-size: 1300px auto;
+        background-image: url(../img/1300@1x.jpg)
+    }
+}
+
+@media screen and (min-width: 1301px) {
+    .first-screen-bg {
+        background-size: 1920px auto;
+        background-image: url(../img/1920@1x.jpg)
+    }
+}
+
+@media screen and (min-width: 1921px) {
+    .first-screen-bg {
+        background-size: 2560px auto;
+        background-image: url(../img/2560@1x.jpg)
     }
 }
 ```
 
-Очень удобно выносить параметры адаптации в переменные и редактировать их из одного файла:
-```scss
-$p-font-size: (xl:18px, lg: 16px, sm: 14px);
-$p-line-height: (xl:28px, lg: 24px, sm: 22px);
 
-p {
-  @include add-media((
-          font-size: $p-font-size,
-          line-height: $p-line-height
-  ))
-}
-```
 </details>

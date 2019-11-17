@@ -1,17 +1,17 @@
 // Дебаггинг -----------------------------------------------------------------------------------------------------------
-$grid-debugger: true;
+$grid-debugger: true!default;
 
 // Основное ------------------------------------------------------------------------------------------------------------
-$grid-col-count: 12;
+$grid-col-count: 12!default;
 
 // Имена классов -------------------------------------------------------------------------------------------------------
-$grid-container-class: 'container';
-$grid-row-class: 'row';
-$grid-col-prefix: '';
+$grid-container-class: 'container'!default;
+$grid-row-class: 'row'!default;
+$grid-col-prefix: ''!default;
 
 // Брейкпоинты ---------------------------------------------------------------------------------------------------------
-$grid-container-padding: 15px;
-$grid-col-padding: 15px;
+$grid-container-padding: 15px!default;
+$grid-col-padding: 15px!default;
 
 $grid-breakpoints: (
         xl: (min: 1200px, container: 1140px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
@@ -19,22 +19,22 @@ $grid-breakpoints: (
         md: (min: 768px, container: 720px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
         sm: (min: 576px, container: 540px, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
         xs: (min: 0px, container: 100%, container-padding: $grid-container-padding, col-padding: $grid-col-padding),
-);
+)!default;
 
 // Дополнительно -------------------------------------------------------------------------------------------------------
 // Вынести общие стили в отдельный класс
-$grid-col-general-class-enable: true;
-$grid-col-general-class-name: 'col';
+$grid-col-general-class-enable: true!default;
+$grid-col-general-class-name: 'col'!default;
 
 // Вспомогательные классы ----------------------------------------------------------------------------------------------
 // Смещение ячеек. Добавляет отступ слева
-$grid-offset-classes-enable: true;
-$grid-offset-classes-prefix: 'offset-';
-$grid-offset-classes-postfix: '';
-$grid-offset-max: 11;
+$grid-offset-classes-enable: true!default;
+$grid-offset-classes-prefix: 'offset-'!default;
+$grid-offset-classes-postfix: ''!default;
+$grid-offset-max: 11!default;
 
 // Изменение порядка вывода
-$enable-grid-order-classes: true;
-$grid-order-classes-prefix: 'order-';
-$grid-order-classes-postfix: '';
-$grid-order-max: 6;
+$enable-grid-order-classes: true!default;
+$grid-order-classes-prefix: 'order-'!default;
+$grid-order-classes-postfix: ''!default;
+$grid-order-max: 6!default;

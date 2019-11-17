@@ -61,6 +61,24 @@ p {
 - Опциональные вспомогательные классы для добавления отступов и изменения порядка вывода
 - Набор миксинов для упрошения адаптации элементов
 
+Классы сетки при настройках по умолчанию:
+```html
+<div class="container">
+    <div class="row">
+        <div class="col xl-8">
+            <h2>Базовая сетка</h2>
+            <p>...</p>
+        </div>
+        <div class="col xl-3 offset-xl-1">
+            <p>Дополнительная колонка</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col xl-8 order-xl-last">col xl-8 order-xl-last (первый)</div>
+        <div class="col xl-4 order-xl-first">col xl-4 order-xl-first (второй)</div>  
+    </div>
+</div>
+```
 
 ## Установка
 Используя git
